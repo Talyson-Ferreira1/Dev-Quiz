@@ -1,0 +1,76 @@
+
+:root {
+    --border-radius: 0.75rem;
+  --primary-color: #639dac;
+  --secondary-color: #3c3852;  
+}
+.card {
+
+  width: 70%;
+  height: 30%;
+  margin: 2rem 0;
+  font-family: "Arial";
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  position: relative;
+  display: flex; 
+  justify-content: center;
+  flex-direction: column;
+}
+.enunciadoReview,.CorrectAlternative, .MarkedAlternative {
+  color: white;
+  padding: .5rem 0;
+}
+
+.card .card__arrow {
+  position: absolute;
+  background: var(--primary-color);
+  padding: 0.4rem;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card svg {
+  transition: 0.2s;
+}
+.card__arrow.right {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  bottom: 0;
+  right: 0;
+}
+.card__arrow.left {
+  
+  border-top-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  bottom: 0;
+  left: 0;
+  
+
+}
+
+.card:hover .card__arrow svg {
+  transform: translateX(3px);
+}
+
+@media (max-width:900px) { 
+  .enunciadoReview {
+    font-size: 1rem;
+  }
+  .CorrectAlternative, .MarkedAlternative {
+    font-size: .7rem;
+  }
+}
+
+@media (max-width:400px) { 
+  .enunciadoReview {
+    font-size: .8rem;
+  }
+  .CorrectAlternative, .MarkedAlternative {
+    font-size: .5rem;
+  }
+} 

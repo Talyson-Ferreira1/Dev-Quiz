@@ -1,0 +1,212 @@
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+.containerInit {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    overflow: hidden;
+    background: #1e232e83;
+
+}
+.containerInit.Light {
+    background:rgba(255, 255, 255, 0.744);
+}
+
+.leftSize {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.leftSize h1 {
+    font-size: 3em;
+    color: white;
+    padding: 0 2rem;
+    font-weight: 700;
+}
+.leftSize h1.Light {
+    color: black;
+}
+.leftSize p {
+    padding: 1rem 2rem;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: rgba(241, 241, 241, 0.55);
+}
+.leftSize p.Light {
+    color: black;
+}
+.containerBtn {
+    width: 100%;
+    padding: 1rem 2rem;
+}
+.btnInit{
+    width: 10rem;
+    height: 3rem;
+    border-radius:20px ;
+    border: none;
+    outline: none;
+    background: #639dac;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow:
+    0.3px 0.4px 0.5px -1px rgba(0, 0, 0, 0.015),
+    0.7px 0.9px 1.2px -1px rgba(0, 0, 0, 0.022),
+    1.2px 1.5px 2px -1px rgba(0, 0, 0, 0.027),
+    1.8px 2.3px 3px -1px rgba(0, 0, 0, 0.031),
+    2.6px 3.3px 4.3px -1px rgba(0, 0, 0, 0.035),
+    3.7px 4.6px 6px -1px rgba(0, 0, 0, 0.039),
+    5.3px 6.5px 8.5px -1px rgba(0, 0, 0, 0.043),
+    7.7px 9.5px 12.4px -1px rgba(0, 0, 0, 0.048),
+    11.8px 14.6px 19.1px -1px rgba(0, 0, 0, 0.055),
+    21px 26px 34px -1px rgba(0, 0, 0, 0.07);
+    color: white;
+}
+.btnInit:hover {
+    transform: scale(1.05);
+}
+
+.rightSize {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+.rightSize img {
+    position: absolute;
+}
+
+.Mode {
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+    z-index: 2;
+}
+.switch {
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #223243;
+    transition: .4s;
+    border-radius: 30px;
+} 
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    left: 0.3em;
+    bottom: 0.3em;
+    background-color: #223243;
+    box-shadow: inset 2px -2px 0 1.8px #fff;
+    transition: .4s;
+    animation: anima1 0.3s linear;
+}  
+@keyframes anima1 {
+    0% {
+      transform: translateX(1.5em);
+    }
+  
+    80% {
+      transform: translateX(-0.3em);
+    }
+  
+    100% {
+      transform: translateX(0em);
+    }
+} 
+.switch input:checked + .slider:before {
+    background-color: yellow;
+    box-shadow: none;
+    transform: translateX(1.5em);
+    animation: anima 0.3s linear;
+}
+@keyframes anima {
+    0% {
+      transform: translateX(0px)
+    }
+  
+    80% {
+      transform: translateX(1.6em)
+    }
+  
+    100% {
+      transform: translateX(1.4em)
+    }
+}
+
+@media(max-width:900px){
+    .leftSize h1 {
+        font-size: 2em;
+    }
+    .leftSize p {
+        padding: 1rem 2rem;
+        font-size: 1em;        
+    }
+    .btnInit { 
+        width: 8rem;
+        height: 2.5rem;
+        font-size: .8em;
+    }
+}
+@media(max-width:600px){
+    .containerInit {
+        grid-template-rows: 50% 50%;
+        grid-template-columns: 100%;
+        
+    }
+    .rightSize {
+        grid-row: 1;
+    }
+    .rightSize svg {
+        height: 100%;
+    }
+    .leftSize {
+        grid-row: 2;
+    }
+    .leftSize h1 {
+        text-align: center;
+
+    }
+    .leftSize p {
+        padding: 1rem 4rem;
+        text-align: center;
+    }
+    .containerBtn {
+        display: flex;
+        justify-content: center;
+    }
+}

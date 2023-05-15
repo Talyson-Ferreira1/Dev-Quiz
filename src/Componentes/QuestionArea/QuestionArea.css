@@ -1,0 +1,79 @@
+.container {
+    width:100vw;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ContainerQuestions{
+    width: 90vw;
+    height: 90vh;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow:
+        0.1px 0.2px 1px rgba(0, 0, 0, 0.013),
+        0.3px 0.5px 2.3px rgba(0, 0, 0, 0.02),
+        0.5px 0.9px 3.9px rgba(0, 0, 0, 0.024),
+        0.8px 1.4px 5.9px rgba(0, 0, 0, 0.028),
+        1.2px 2.1px 8.8px rgba(0, 0, 0, 0.032),
+        1.8px 3.1px 13px rgba(0, 0, 0, 0.036),
+        2.7px 4.7px 19.4px rgba(0, 0, 0, 0.04),
+        4.3px 7.5px 30.9px rgba(0, 0, 0, 0.047),
+        8px 14px 58px rgba(0, 0, 0, 0.06);
+    background: #1e232ec6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column ;
+    position: relative;
+}
+.return {
+  width: 2rem;
+  height: 1rem;
+  background: #639dac;
+  border-radius: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.return:hover {
+    transform: scale(1.05);
+}
+.svgBg {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    z-index: 1;
+    
+}
+
+@keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+}
+
+@media (max-width:600px) {
+  .return {
+    font-size: .7rem;
+}
+}
