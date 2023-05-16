@@ -210,3 +210,28 @@ video {
         justify-content: center;
     }
 }
+
+@media(max-width:400px){
+
+    
+    .rightSize {
+        width: 100%;
+    }
+    .rightSize svg {
+        height: 100%;
+    }
+    .leftSize h1 {
+        text-align: center;
+         padding: 1rem 1rem;
+
+    }
+    .leftSize p {
+        padding: 1rem 2rem;
+        text-align: center;
+        font-size: .8rem;
+    }
+    .containerBtn {
+        display: flex;
+        justify-content: center;
+    }
+}

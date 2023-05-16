@@ -20,15 +20,16 @@ export default function QuestionArea() {
 
         <div className='ContainerQuestions'>
 
-          <Link to="/tecnologia">
+          <Link to="/Dev-Quiz/tecnologia">
               <div className="return">
                 <FontAwesomeIcon icon={faArrowLeft} />
               </div>
           </Link>
 
-          <ProgressBar />
+          <ProgressBar/>
 
-          <Problem />
+          {/* //se o componente não carregar mosre outro chamado <return/> */}
+          <Problem/>
 
           <div className="svgBg">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

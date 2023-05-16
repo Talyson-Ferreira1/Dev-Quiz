@@ -19,10 +19,11 @@ import './Languages.css';
 
 export default function ChooseLinguagens(){
     
-    const [selectedOption, setSelectedOption] = useState("easy");
+    const [ selectedOption, setSelectedOption ] = useState("easy");
+    const [ dataLocalStorage, setDataLocalStorage] = useState([]);
 
-    const {theme} = useContext(ThemeContext)
-    const {setUserLanguage} = useContext(LanguageContext)
+    const { theme } = useContext(ThemeContext)
+    const { userLanguage, setUserLanguage} = useContext(LanguageContext)
 
     const containerRef = useRef();
     const titleRef = useRef();
@@ -38,11 +39,16 @@ export default function ChooseLinguagens(){
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
+
     };
 
-    const ChooseLanguage = (lang)=>{
-        setUserLanguage([...lang, selectedOption])
-    }
+    const ChooseLanguage = (lang) => {
+        setUserLanguage([...lang, selectedOption]);
+
+        const newData = [...dataLocalStorage, lang[0], selectedOption];
+        localStorage.setItem('LanguageAndDifficulty', JSON.stringify(newData));
+
+    };
 
     useEffect(()=>{
         
@@ -54,52 +60,55 @@ export default function ChooseLinguagens(){
       
     },[theme])
 
+
     
 
+    
+    // Salvar os dados no localstorage para buscar os dados se a pagia for atualizada, faca uma condicional ou busca no localstorafe ou no context
    
 
     return(
         <>
             <Video/>
             <section ref={containerRef} className="containerLanguages">
-                <Link to="/Quiz">
+                <Link to="/Dev-Quiz">
                     <div className="return"><FontAwesomeIcon icon={faArrowLeft} /></div>
                 </Link>
                 <Mode/>      
                 <h1 ref={titleRef} className="titulo">Escolha a tecnologia e a dificuldade </h1>
                 <div className="grid-container"> 
             
-                    <Link to="/..."  >
+                    <Link to="/Dev-Quiz/Loading"  >
                         <div ref={refs.python} className="language python" onClick={()=>{ChooseLanguage(["PYTHON"])}} >
                             <img src={PythonIcon} alt="Python icon"/>
                         </div>
                     </Link>
 
-                    <Link to="/...">
+                    <Link to="/Dev-Quiz/Loading">
                         <div ref={refs.js} className="language JavaScript" onClick={()=>{ChooseLanguage(["JAVASCRIPT"])}}>
                             <img src={JavaScriptIcon} alt="JavaScript icon"/>
                         </div>
                     </Link>
 
-                    <Link to="/..." >
+                    <Link to="/Dev-Quiz/Loading" >
                         <div ref={refs.sql} className="language SQL" onClick={()=>{ChooseLanguage(["SQL"])}}>
                             <img src={SQLIcon} alt="SQL icon"/>
                         </div>
                     </Link>
 
-                    <Link to="/..." >
+                    <Link to="/Dev-Quiz/Loading" >
                         <div ref={refs.java}className="language Java" onClick={()=>{ChooseLanguage(["JAVA"])}}>
                             <img src={JavaIcon} alt="Java icon"/>
                         </div>
                     </Link>
 
-                    <Link to="/..." >
+                    <Link to="/Dev-Quiz/Loading" >
                         <div ref={refs.html} className="language HTML" onClick={()=>{ChooseLanguage(["HTML"])}}>
                             <img src={HTMLIcon} alt="HTML icon"/>
                         </div>
                     </Link>
 
-                    <Link to="/..." >
+                    <Link to="/Dev-Quiz/Loading" >
                         <div ref={refs.css} className="language CSS" onClick={()=>{ChooseLanguage(["CSS"])}}>
                             <img src={CssIcon} alt="CSS icon"/>
                         </div>

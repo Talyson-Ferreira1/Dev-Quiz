@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef} from 'react';
+import React, {useEffect, useContext, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { LanguageContext } from '../context/LanguageContext';
@@ -1693,163 +1693,183 @@ let CSS_hard = [
     }
 ]
 
-export default function Loader() {
+export default function Loader() {  
+    const {userLanguage} = useContext(LanguageContext);
+    const {setQuestionGame} = useContext(QuestionContext);
+    const {theme} = useContext(ThemeContext);
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
-  const {userLanguage} = useContext(LanguageContext);
-  const {setQuestionGame} = useContext(QuestionContext);
-  const {theme} = useContext(ThemeContext);
-
-  const containerRef = useRef()
-  const textColor = useRef()
-
-  function sendQuestions(){
-      let quest;
-
-      switch (userLanguage[0]) {
-          case "PYTHON":
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = PYTHON_easy;
-                      break;
-                  case "medium":
-                      quest = PYTHON_medium;
-                      break;
-                  case "hard":
-                      quest = PYTHON_hard;
-                      break;
-                  default:
-                      // caso a dificuldade não seja encontrada
-                      quest = null;
-                  break;
-              }
-          break;
-          case "JAVASCRIPT":
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = JAVASCRIPT_easy;
-                      break;
-                  case "medium":
-                      quest = JAVASCRIPT_medium;
-                      break;
-                  case "hard":
-                      quest = JAVASCRIPT_hard;
-                      break;
-                  default:
-                      // caso a dificuldade não seja encontrada
-                      quest = null;
-                      break;
-              }
-          break;
-          case "SQL":
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = SQL_easy;
-                      break;
-                  case "medium":
-                      quest = SQL_medium;
-                      break;
-                  case "hard":
-                      quest = SQL_hard;
-                      break;
-                  default:
-                      // caso a dificuldade não seja encontrada
-                      quest = null;
-                      break;
-              }
-              break;
-          case "HTML":
-          
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = HTML_easy;
-                      break;
-                  case "medium":
-                      quest = HTML_medium;
-                      break;
-                  case "hard":
-                      quest = HTML_hard;
-                      break;
-                  default:
-                  // caso a dificuldade não seja encontrada
-                      quest = null;
-                      break;
-              }
-              break;
-          case "CSS":
-          
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = CSS_easy;
-                      break;
-                  case "medium":
-                      quest = CSS_medium;
-                      break;
-                  case "hard":
-                      quest = CSS_hard;
-                      break;
-                  default:
-                  // caso a dificuldade não seja encontrada
-                      quest = null;
-                      break;
-              }
-              break;
-          case "JAVA":
-                      
-              switch (userLanguage[1]) {
-                  case "easy":
-                      quest = JAVA_easy;
-                      break;
-                  case "medium":
-                      quest = JAVA_medium;
-                      break;
-                  case "hard":
-                      quest = JAVA_hard;
-                      break;
-                  default:
-                  // caso a dificuldade não seja encontrada
-                      quest = null;
-                      break;
-              }
-              break;
-          default:
-              // caso a tecnologia não seja encontrada
-              quest = null;
-          break;
-      }
-      return quest
-  }
+    const containerRef = useRef()
+    const textColor = useRef()
   
+    const getLanguageAndDifficultyInLocalStorage = () => {
+        const data = localStorage.getItem('LanguageAndDifficulty');
+        const dataJson = JSON.parse(data); 
 
-  useEffect(()=>{
-
-    setQuestionGame(sendQuestions)
-    
-    setTimeout(()=>{
-      navigate('/questões')
-    },2000)
-  },[])
-  
-  useEffect(()=>{
-    if( theme === "Light" ){
-        containerRef.current.classList.add("Light");
-        textColor.current.classList.add("Light");
-    }else{
-        containerRef.current.classList.remove("Light");
-        textColor.current.classList.remove("Light");
+        return dataJson
     }
-  },[theme])
+     
+    const sendQuestionsToContext = () => {
+        let data, quest;
+
+        if(userLanguage !== ""){
+            data = userLanguage
+        } else{
+            data = getLanguageAndDifficultyInLocalStorage;
+        }
+
+        switch (data[0]) {
+            case "PYTHON":
+                switch (data[1]) {
+                    case "easy":
+                        quest = PYTHON_easy;
+                        break;
+                    case "medium":
+                        quest = PYTHON_medium;
+                        break;
+                    case "hard":
+                        quest = PYTHON_hard;
+                        break;
+                    default:
+                        // caso a dificuldade não seja encontrada
+                        quest = null;
+                    break;
+                }
+            break;
+            case "JAVASCRIPT":
+                switch (data[1]) {
+                    case "easy":
+                        quest = JAVASCRIPT_easy;
+                        break;
+                    case "medium":
+                        quest = JAVASCRIPT_medium;
+                        break;
+                    case "hard":
+                        quest = JAVASCRIPT_hard;
+                        break;
+                    default:
+                        // caso a dificuldade não seja encontrada
+                        quest = null;
+                        break;
+                }
+            break;
+            case "SQL":
+                switch (data[1]) {
+                    case "easy":
+                        quest = SQL_easy;
+                        break;
+                    case "medium":
+                        quest = SQL_medium;
+                        break;
+                    case "hard":
+                        quest = SQL_hard;
+                        break;
+                    default:
+                        // caso a dificuldade não seja encontrada
+                        quest = null;
+                        break;
+                }
+                break;
+            case "HTML":
+            
+                switch (data[1]) {
+                    case "easy":
+                        quest = HTML_easy;
+                        break;
+                    case "medium":
+                        quest = HTML_medium;
+                        break;
+                    case "hard":
+                        quest = HTML_hard;
+                        break;
+                    default:
+                    // caso a dificuldade não seja encontrada
+                        quest = null;
+                        break;
+                }
+                break;
+            case "CSS":
+            
+                switch (data[1]) {
+                    case "easy":
+                        quest = CSS_easy;
+                        break;
+                    case "medium":
+                        quest = CSS_medium;
+                        break;
+                    case "hard":
+                        quest = CSS_hard;
+                        break;
+                    default:
+                    // caso a dificuldade não seja encontrada
+                        quest = null;
+                        break;
+                }
+                break;
+            case "JAVA":
+                        
+                switch (data[1]) {
+                    case "easy":
+                        quest = JAVA_easy;
+                        break;
+                    case "medium":
+                        quest = JAVA_medium;
+                        break;
+                    case "hard":
+                        quest = JAVA_hard;
+                        break;
+                    default:
+                    // caso a dificuldade não seja encontrada
+                        quest = null;
+                        break;
+                }
+                break;
+            default:
+                // caso a tecnologia não seja encontrada
+                quest = null;
+            break;
+        }
+        return quest
+    }
+
+    const sendQuestionsToLocalStorage = () => {
+        const arrayQuestions = sendQuestionsToContext();
+        localStorage.setItem('DataQuestions', JSON.stringify(arrayQuestions));
+    }
+
+    useEffect(()=>{
+        
+        setQuestionGame(sendQuestionsToContext)
+        sendQuestionsToLocalStorage()        
+        
+        setTimeout(()=>{
+            navigate('/Dev-Quiz/questões')
+        },2000)
+
+    },[])
   
-  return (
-    <>
-      <div ref={containerRef} className="containerload">
-        <div className="typewriter">
-          <div className="slide"><i></i></div>
-          <div className="paper"></div>
-          <div className="keyboard"></div>
+    useEffect(()=>{
+
+        if( theme === "Light" ){
+            containerRef.current.classList.add("Light");
+            textColor.current.classList.add("Light");
+        }else{
+            containerRef.current.classList.remove("Light");
+            textColor.current.classList.remove("Light");
+        }
+
+    },[theme])
+    
+    return (
+        <>
+        <div ref={containerRef} className="containerload">
+            <div className="typewriter">
+            <div className="slide"><i></i></div>
+            <div className="paper"></div>
+            <div className="keyboard"></div>
+            </div>
+            <h1 ref={textColor} className='text'>Espere um pouco estamos elaborando suas perguntas</h1>
         </div>
-        <h1 ref={textColor} className='text'>Espere um pouco estamos elaborando suas perguntas</h1>
-      </div>
-    </>
-  )
+        </>
+    )
 }

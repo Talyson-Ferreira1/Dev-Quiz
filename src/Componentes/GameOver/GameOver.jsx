@@ -25,7 +25,7 @@ export default function GameOver() {
   const { theme} = useContext(ThemeContext)
   const containerRef = useRef()
   
-  const contarAcertosEAerros = (array) => {
+  const contarAcertosEerros = (array) => {
     
     const total = array.length;
     const acertos = array.filter(item => item === 'acertou').length;
@@ -67,16 +67,43 @@ export default function GameOver() {
     setUserData({})
   }
 
-  useEffect(()=>{
+  const fetchUserResponse = () => {
 
-    let convertedValue = contarAcertosEAerros(userResult);
-    setpercentage(convertedValue.percAcertos)
+    let parse;
+    const storedUserResponse = localStorage.getItem('UserResponse');
+    
+    if (storedUserResponse) {
+
+      parse = JSON.parse(storedUserResponse); 
+      
+    }
+
+    return parse;
+
+  }
+
+
+  useEffect(() => {
+
+    let convertedValue;
+
+    if (userResult.length === 0) {
+
+      convertedValue = contarAcertosEerros(fetchUserResponse()); 
+      setpercentage(convertedValue.percAcertos)
+
+    } else {
+
+      convertedValue = contarAcertosEerros(userResult);
+      setpercentage(convertedValue.percAcertos)
+
+    }
 
     processMessage(convertedValue.percAcertos,convertedValue.acertos,convertedValue.erros)
-     
+       
     setCounterContext(1)
 
-  },[])
+  }, [userResult])
   
   useEffect(()=>{
     if( theme === "Light" ){
@@ -96,7 +123,7 @@ export default function GameOver() {
         <h1 style={{color:messageColor}} className='message'>{message}</h1>
         <h2 className='userHits'> Você acertou {userHits} e errou {userError}</h2>
         <ProgressBar percentage={percentage} circleWidth="200" />
-        <Link to={"/tecnologia"}>
+        <Link to={"/Dev-Quiz/tecnologia"}>
           <button className='btnReturn' title="Voltar para página inicial" onClick={()=>{resetUserData()}}>Jogar novamente</button>
         </Link>
         <ReviewQuestion />

@@ -13,19 +13,21 @@ import "./Question.css"
 // O selectedAlternative precisa ser resetado se o usuario remover a classe selected 
 
 function Problem() {
-    const [ btnText, setBtnText] =useState("Próxima")
+    const [ changeBtnText, setChangeBtnText] =useState("Próxima")
     const [ selectedAlternative, setSelectedAlternative ] = useState();
     const [ contador, setContador ] = useState(1)
     const [ counterQuestion, setCounterQuestion ] = useState(0)
     const [ dataQuestions, setDataQuestions ] = useState([]);
     const [ icon, setIcon ] = useState({"A":false,"B":false,"C":false,"D":false})
+    const [ question, setQuestion] = useState('');
+    const [ userResponseForLocalStorage, setUserResponseForLocalStorage] = useState([])
 
     const { questionGame } = useContext(QuestionContext);
     const { userResult, setUserResult } = useContext(ResultContext);
     const { counterContext, setCounterContext } = useContext(CounterContext)
     const { userData, setUserData } = useContext(UserDataContext)
 
-    const question = dataQuestions[counterQuestion - 1];
+    
     const navigate = useNavigate();
     const Refs = {
         alternatives: useRef(),
@@ -101,18 +103,26 @@ function Problem() {
 
     const updateUserResponseAndUserData = () => {
         
-        let currentAnswer = questionGame[counterQuestion - 1].resposta.toUpperCase();
-        let currentStatement = questionGame[counterQuestion - 1].enunciado;
+        let currentAnswer = dataQuestions[counterQuestion - 1].resposta.toUpperCase();
+        let currentStatement = dataQuestions[counterQuestion - 1].enunciado;
         let StringsAlternatives = {
-            A : questionGame[counterQuestion - 1].alternativa_A,
-            B : questionGame[counterQuestion - 1].alternativa_B,
-            C : questionGame[counterQuestion - 1].alternativa_C,
-            D : questionGame[counterQuestion - 1].alternativa_D
+            A : dataQuestions[counterQuestion - 1].alternativa_A,
+            B : dataQuestions[counterQuestion - 1].alternativa_B,
+            C : dataQuestions[counterQuestion - 1].alternativa_C,
+            D : dataQuestions[counterQuestion - 1].alternativa_D
         }
 
         if(selectedAlternative !== undefined){
-
+            
             selectedAlternative === currentAnswer?setUserResult([...userResult,"acertou"]):setUserResult([...userResult,"errou"]); 
+
+            selectedAlternative === currentAnswer
+                ?setUserResponseForLocalStorage([...userResponseForLocalStorage,"acertou"])
+                :setUserResponseForLocalStorage([...userResponseForLocalStorage,"errou"]); 
+
+            
+
+           /*  localStorage.setItem('UserResponse', JSON.stringify(newUserData)) */
                         
             const newUserData = {
                 ...userData,
@@ -126,24 +136,62 @@ function Problem() {
             };
             
             setUserData(newUserData);
-            
-                        
+            sendUserDataToLocalStorage(newUserData)
         }
     }
 
-    useEffect(() => {
+    const sendUserDataToLocalStorage = (newUserData) => {
+        localStorage.setItem('UserData', JSON.stringify(newUserData));
+    }
 
-        let arrayEmbaralhado = shuffleQuestions(questionGame)
-        setDataQuestions(arrayEmbaralhado);
+    const sendUserResponseToLocalStorage = () => {
+        localStorage.setItem('UserResponse', JSON.stringify(userResponseForLocalStorage));
+    }
+
+    const fetchDataQuestions = () => {
+
+        const storedDataQuestion = localStorage.getItem('DataQuestions');
         
+        if (storedDataQuestion) {
+
+            const parsedDataQuestion = JSON.parse(storedDataQuestion);
+            const shuffledQuestions = shuffleQuestions(parsedDataQuestion);
+            
+            setDataQuestions(shuffledQuestions);
+        }
+
+    }
+
+    useEffect(() => {
+   
+        if (!questionGame) {
+
+            fetchDataQuestions();
+
+        } else {
+
+            const shuffledQuestions = shuffleQuestions(questionGame);
+            setDataQuestions(shuffledQuestions);
+
+        }
+
     }, [questionGame]);
 
     useEffect(() => {
-        contador === 10 ? setBtnText('Finalizar') : setBtnText('Próxima' ) 
+        contador === 10 ? setChangeBtnText('Finalizar') : setChangeBtnText('Próxima' ) 
         contador === 10 ? setCounterQuestion(10) : setCounterQuestion(counterQuestion + 1 ) 
-        contador === 11 ? navigate(`/gameOver`) : ""
+        contador === 11 ? sendUserResponseToLocalStorage() : ""
+        contador === 11 ? navigate(`/Dev-Quiz/gameOver`) : ""
 
     },[contador]);
+
+    useEffect(() => {
+
+        if (dataQuestions.length > 0) {
+            setQuestion(dataQuestions[counterQuestion - 1]);
+        }
+
+    }, [dataQuestions, counterQuestion]);
     
     useEffect(()=>{
         
@@ -177,7 +225,7 @@ function Problem() {
                         {question.alternativa_D}
                     </li>
                     </ul>
-                    <button className='btnNext' onClick={()=>{updateUserResponseAndUserData(); nextQuestion();}}>{btnText}</button>
+                    <button className='btnNext' onClick={()=>{updateUserResponseAndUserData(); nextQuestion();}}>{changeBtnText}</button>
                 </div>
             )}
         </>

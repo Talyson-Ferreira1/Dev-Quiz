@@ -7,7 +7,7 @@ import {  faHouse } from '@fortawesome/free-solid-svg-icons';
 function ToHome() {
   return (
     <div>
-      <Link to={"/Quiz"}>
+      <Link to={"/Dev-Quiz"}>
           <button title="Voltar para página inicial"><FontAwesomeIcon icon={faHouse} /></button>
         </Link>
     </div>
