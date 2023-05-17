@@ -37,7 +37,7 @@ const initScreen = () => {
         <Mode/>
         <div className="leftSize">
           <h1 ref={titleRef} className='title'>O quiz desenvolvido para desenvolvedores.</h1>
-          <p ref={textRef} className='paragraph'>O DevQuiz é um Quiz para programadores, é uma ótima maneira de testar e aprimorar seus conhecimentos em programação. Com perguntas específicas, de diversas linguagens e tecnologias, os desenvolvedores podem avaliar seu nível de conhecimento e identificar áreas que precisam ser melhoradas. Convido você a testar esta aplicação e se desafiar a melhorar suas habilidades.</p>
+          <p ref={textRef} className='paragraph'>Melhore suas habilidades em programação com o DevQuiz!<br/> Esse é um Quiz feito especialmente para programadores, com perguntas sobre várias linguagens e tecnologias. Teste seus conhecimentos, descubra seu nível atual e encontre áreas para melhorar. Desafie-se e aprimore suas habilidades hoje mesmo!</p>
           <div className="containerBtn">
             <Link to="/Dev-Quiz/tecnologia">
               <button className='btnInit'>Começar</button>

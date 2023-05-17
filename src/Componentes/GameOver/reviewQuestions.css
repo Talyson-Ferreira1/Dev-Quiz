@@ -36,6 +36,9 @@
   margin-top: 2rem;
   transition-delay: 1s;
 }
+.btnToggle:hover{
+  transform: scale(1);
+}
 
 .btnToggle.active {
   width: 5rem;
