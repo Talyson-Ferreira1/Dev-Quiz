@@ -20,10 +20,9 @@ import './Languages.css';
 export default function ChooseLinguagens(){
     
     const [ selectedOption, setSelectedOption ] = useState("easy");
-    const [ dataLocalStorage, setDataLocalStorage] = useState([]);
 
     const { theme } = useContext(ThemeContext)
-    const { userLanguage, setUserLanguage} = useContext(LanguageContext)
+    const { setUserLanguage} = useContext(LanguageContext)
 
     const containerRef = useRef();
     const titleRef = useRef();
@@ -45,7 +44,7 @@ export default function ChooseLinguagens(){
     const ChooseLanguage = (lang) => {
         setUserLanguage([...lang, selectedOption]);
 
-        const newData = [...dataLocalStorage, lang[0], selectedOption];
+        const newData = [ lang[0], selectedOption];
         localStorage.setItem('LanguageAndDifficulty', JSON.stringify(newData));
 
     };
@@ -59,13 +58,7 @@ export default function ChooseLinguagens(){
             .forEach(ref => ref.current.classList.remove("Light"));
       
     },[theme])
-
-
-    
-
-    
-    // Salvar os dados no localstorage para buscar os dados se a pagia for atualizada, faca uma condicional ou busca no localstorafe ou no context
-   
+  
 
     return(
         <>
