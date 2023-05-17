@@ -11,6 +11,9 @@ export default defineConfig({
       history({
         // Configuração adicional, se necessário
       })
-    ]
+    ],
+    fs: {
+      strict: true
+    }
   }
 })
