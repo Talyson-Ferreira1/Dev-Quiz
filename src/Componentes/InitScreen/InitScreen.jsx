@@ -5,7 +5,7 @@ import { ThemeContext } from '../context/themeContext.jsx';
 import { CounterContext } from '../context/counterConext';
 
 import Mode from '../../Componentes/Mode/mode.jsx'
-import ImgIlustration from '../../img/init1.png';
+import ImgIlustration from '../../img/init2.png';
 import Video from "../fundo/videoPlayer"
 import './Init.css';
 

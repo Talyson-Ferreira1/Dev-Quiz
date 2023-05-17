@@ -184,7 +184,7 @@ video {
 }
 @media(max-width:600px){
     .containerInit {
-        grid-template-rows: 50% 50%;
+        grid-template-rows: 40% 60%;
         grid-template-columns: 100%;
         
     }
@@ -199,11 +199,14 @@ video {
     }
     .leftSize h1 {
         text-align: center;
+        font-size: 1.5rem;
+        padding: .5rem 1rem;
 
     }
     .leftSize p {
-        padding: 1rem 4rem;
+        padding: .5rem 1rem;
         text-align: center;
+        font-size: .8rem;
     }
     .containerBtn {
         display: flex;
@@ -247,5 +250,17 @@ video {
     .containerBtn {
         display: flex;
         justify-content: center;
+    }
+}
+@media(max-width:300px){
+    .leftSize h1 {
+        font-size: 1rem;
+        padding: .5rem 1rem;
+
+    }
+    .leftSize p {
+        padding: .5rem 1rem;
+        text-align: center;
+        font-size: .7rem;
     }
 }
