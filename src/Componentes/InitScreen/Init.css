@@ -210,25 +210,39 @@ video {
         justify-content: center;
     }
 }
-
 @media(max-width:400px){
 
-    
+    .containerInit {
+        grid-template-rows: 40% 60%;
+        grid-template-columns: 100%;
+        
+    }
     .rightSize {
         width: 100%;
+        height: 100%;
     }
     .rightSize svg {
+        width: 50%;
+        height: auto;
+    }
+    .rightSize img {
+        width: 50%;
+        height: auto;
+    }
+    .leftSize{
+        width: 100%;
         height: 100%;
     }
     .leftSize h1 {
         text-align: center;
-         padding: 1rem 1rem;
+        padding: .5rem 1rem;
+        font-size: 1.5rem;
 
     }
     .leftSize p {
-        padding: 1rem 2rem;
+        padding: .5rem 2rem;
         text-align: center;
-        font-size: .8rem;
+        font-size: .7rem;
     }
     .containerBtn {
         display: flex;
