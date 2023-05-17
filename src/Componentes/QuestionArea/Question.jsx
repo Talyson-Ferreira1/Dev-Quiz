@@ -39,11 +39,15 @@ function Problem() {
     }
     
     const changeIconChecked = (alternative) =>{
-        setIcon(prevState => {
-            const newIcon = { A: false, B: false, C: false, D: false }; 
-            newIcon[alternative] = true;
-            return newIcon;
-        });
+
+        const newIcon = { A: false, B: false, C: false, D: false };
+        
+        setIcon( newIcon ) 
+
+        if(alternative){
+            setIcon(prevState => { newIcon[alternative] = true; return newIcon; })
+        }
+        
     }
 
     const shuffleQuestions = (array) => {
@@ -76,6 +80,7 @@ function Problem() {
     
     const resetSelectedAlternative = () => {
         setSelectedAlternative(undefined)
+        changeIconChecked()
     }
 
     const removeClassSelected = () => {
@@ -114,15 +119,14 @@ function Problem() {
 
         if(selectedAlternative !== undefined){
             
-            selectedAlternative === currentAnswer?setUserResult([...userResult,"acertou"]):setUserResult([...userResult,"errou"]); 
+            selectedAlternative === currentAnswer
+                ?setUserResult([...userResult,"acertou"])
+                :setUserResult([...userResult,"errou"]); 
 
             selectedAlternative === currentAnswer
                 ?setUserResponseForLocalStorage([...userResponseForLocalStorage,"acertou"])
                 :setUserResponseForLocalStorage([...userResponseForLocalStorage,"errou"]); 
 
-            
-
-           /*  localStorage.setItem('UserResponse', JSON.stringify(newUserData)) */
                         
             const newUserData = {
                 ...userData,

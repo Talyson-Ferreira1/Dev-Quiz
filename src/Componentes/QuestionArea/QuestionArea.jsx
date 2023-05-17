@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import ProgressBar from './ProgressBar';
-import Problem from './Question';
+import Question from './Question';
 import Video from '../fundo/videoPlayer'
 import './QuestionArea.css';
 
@@ -28,8 +28,7 @@ export default function QuestionArea() {
 
           <ProgressBar/>
 
-          {/* //se o componente não carregar mosre outro chamado <return/> */}
-          <Problem/>
+          <Question/>
 
           <div className="svgBg">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
