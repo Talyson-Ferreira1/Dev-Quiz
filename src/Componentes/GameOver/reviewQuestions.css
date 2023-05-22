@@ -36,6 +36,7 @@
   margin-top: 2rem;
   transition-delay: 1s;
 }
+
 .btnToggle:hover{
   transform: scale(1);
 }
@@ -49,7 +50,7 @@
 }
 
 .btnToggle::after {
-  content: 'Comparar resultado';
+  content: 'Ver resultado';
   font-weight: 700;
   display: block;
   position: absolute;
@@ -171,6 +172,11 @@
   left: 0;
   
 
+}
+.card__arrow.left button, .card__arrow.right button{
+  width: auto;
+  height: auto;
+  background: transparent;
 }
 
 .card:hover .right svg {

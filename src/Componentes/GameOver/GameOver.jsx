@@ -1,136 +1,161 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
-import { ResultContext } from '../context/resultContext';
 import { CounterContext } from '../context/counterConext';
-import { UserDataContext } from '../context/userData';
 import { ThemeContext } from '../context/themeContext';
+import { UserResponseContext } from '../context/UserResponse';
 
 import ProgressBar from './ProgressBar';
 import Video from '../fundo/videoPlayer';
 import ReviewQuestion from './reviewQuestions';
 import './gameOver.css'
 
-export default function GameOver() {
+import RobotBad from '../../img/robot-bad/robot-7.png'
+import RobotHappy from '../../img/robot-happy/robot-4.png'
+import RobotIndiferent from '../../img/indiferent-robot/robot-3.png'
 
-  const [ percentage, setpercentage] = useState(0)
-  const [ message, setMessage] = useState()
-  const [ userError, setUserError] = useState()
-  const [ userHits, setUserHits] = useState()
-  const [ messageColor, setMessageColor] = useState('rgb(0, 0, 0)');
+function GameOver() {
 
-  const { setCounterContext} = useContext(CounterContext);
-  const { userResult} = useContext(ResultContext);
-  const { setUserData} = useContext(UserDataContext)
-  const { theme} = useContext(ThemeContext)
-  const containerRef = useRef()
-  
-  const contarAcertosEerros = (array) => {
+
+    const [ percentage, setpercentage] = useState(0)
+    const [ message, setMessage] = useState()
+    const [ userError, setUserError] = useState()
+    const [ userHits, setUserHits] = useState()
+    const [ messageColor, setMessageColor] = useState('rgb(0, 0, 0)');
+    const [ robot, setRobot ] = useState()
+
+    const { setCounterContext} = useContext(CounterContext);
+    const { userResponse, setUserResponse } = useContext(UserResponseContext);
+    const { theme} = useContext(ThemeContext)
     
-    const total = array.length;
-    const acertos = array.filter(item => item === 'acertou').length;
-    const erros = total - acertos;
-    const percAcertos = Math.trunc((acertos / total) * 100);
-    const percErros = Math.trunc((erros / total) * 100);
+    const containerRef = useRef()
+   
+    const contarAcertosEerros = (array) => {
     
-    return { acertos, erros, percAcertos, percErros };
-  }
+      const total = array.length;
+      const acertos = array.filter(item => item === 'acertou').length;
+      const erros = total - acertos;
+      const percAcertos = Math.trunc((acertos / total) * 100);
+      const percErros = Math.trunc((erros / total) * 100);
+      
+      const numbers = [ acertos, erros, percAcertos, percErros ];
 
-  const processMessage = (percent, hits, error) => {
-
-    if(percent <= 40){
-
-      setMessage("Você é muito ruim, vá estudar!")
-      changeColorMessage(false)
-
-    }else if( percent <= 90){
-
-      setMessage("Parabéns")
-      changeColorMessage(true)
-
-    }else if(percent === 100){
-      changeColorMessage(true)
-      setMessage("Perfeito")
-
+      return numbers;
     }
 
-    (error === 1) ? setUserError(`${error} questão.`) :  setUserError(`${error} questões.`);
-    (hits === 1) ? setUserHits(`${hits} questão`) :  setUserHits(`${hits} questões`);
-    
-  }
+    const processMessage = (condicional, hits, error) => {
+      if(condicional <= 20){
+        setMessage("Você é muito ruim, vá estudar!")
+        changeColorMessage(false)
 
-  const changeColorMessage = (condition) => {
-    condition === true ? setMessageColor('rgb(10, 222, 67)') : setMessageColor('rgb(239, 78, 78)');
-  }
+      }else if(condicional <= 50){
+        setMessage("Nada mal, revise e tente novamente!")
+        changeColorMessage(true)
 
-  const resetUserData = () => {
-    setUserData({})
-  }
+      }else if( condicional <= 90){
+        setMessage("Boa pontuação, parabéns")
+        changeColorMessage(true)
 
-  const fetchUserResponse = () => {
+      }else if(condicional === 100){
+        changeColorMessage(true)
+        setMessage("Perfeito")
 
-    let parse;
-    const storedUserResponse = localStorage.getItem('UserResponse');
-    
-    if (storedUserResponse) {
+      }
 
-      parse = JSON.parse(storedUserResponse); 
+
+      (error <= 1) ? setUserError(`${error} questão.`) :  setUserError(`${error} questões.`);
+      (hits === 1) ? setUserHits(`${hits} questão`) :  setUserHits(`${hits} questões`);
       
     }
 
-    return parse;
+    function chooseRobotImg  (score)  {
+      if(score <= 20){
+        setRobot(RobotBad)
 
-  }
+      }else if( score <= 70){
+        setRobot(RobotIndiferent)
 
+      }else if(score >= 80){
+        setRobot(RobotHappy)
 
-  useEffect(() => {
-
-    let convertedValue;
-
-    if (userResult.length === 0) {
-
-      convertedValue = contarAcertosEerros(fetchUserResponse()); 
-      setpercentage(convertedValue.percAcertos)
-
-    } else {
-
-      convertedValue = contarAcertosEerros(userResult);
-      setpercentage(convertedValue.percAcertos)
-
+      }
     }
 
-    processMessage(convertedValue.percAcertos,convertedValue.acertos,convertedValue.erros)
-       
-    setCounterContext(1)
+    const changeColorMessage = (condition) => {
+      condition === true ? setMessageColor('rgb(10, 222, 67)') : setMessageColor('rgb(239, 78, 78)');
+    }
 
-  }, [userResult])
+    const resetUserResponse = () => {
+      setUserResponse({})
+    }
+
+    const resetCounterContext = () => {
+      setCounterContext(1)
+    }
+
+    const getUserResultInTheLocalStorage = () => {
+
+      const storedUserResult = localStorage.getItem('userResult');
+
+      let ValueConverted =  JSON.parse(storedUserResult)
+      
+      return ValueConverted
   
-  useEffect(()=>{
-    if( theme === "Light" ){
-      containerRef.current.classList.add("Light");
-    }else{
-      containerRef.current.classList.remove("Light");
     }
-  },[theme])
 
-  return (
-    
-    <div className='containerGameOver'>
+    useEffect(() => {
 
-      <Video/>
-      <div ref={containerRef} className="containerContent">
+      let arrayUserResponses, acertosEerros;
 
-        <h1 style={{color:messageColor}} className='message'>{message}</h1>
-        <h2 className='userHits'> Você acertou {userHits} e errou {userError}</h2>
-        <ProgressBar percentage={percentage} circleWidth="200" />
-        <Link to={"/Dev-Quiz/tecnologia"}>
-          <button className='btnReturn' title="Voltar para página inicial" onClick={()=>{resetUserData()}}>Jogar novamente</button>
-        </Link>
-        <ReviewQuestion />
+      if (!Object.keys(userResponse).length === 0) {
+        arrayUserResponses = userResponse;
+        acertosEerros = contarAcertosEerros(arrayUserResponses.result)
+        
+      } else {
+        arrayUserResponses = getUserResultInTheLocalStorage()
+        acertosEerros = contarAcertosEerros(arrayUserResponses.result)
+        
+      }
+      
+      setpercentage(acertosEerros[2]) 
+      processMessage(acertosEerros[2],acertosEerros[0],acertosEerros[1])
+      chooseRobotImg(acertosEerros[2])
+      resetCounterContext()
 
+    }, [userResponse])
+
+    useEffect(()=>{
+      if( theme === "Light" ){
+        containerRef.current.classList.add("Light");
+      }else{
+        containerRef.current.classList.remove("Light");
+      }
+    },[theme])
+
+    return (
+      
+      <div className='containerGameOver'>
+
+        <Video/>
+        <div ref={containerRef} className="containerContent">
+
+          <h1 style={{color:messageColor}} className='message'>{message}</h1>
+          <h2 className='userHits'> Você acertou {userHits} e errou {userError}</h2>
+          <ProgressBar percentage={percentage} circleWidth="200" />
+          <Link to={"/Dev-Quiz/tecnologia"}>
+            <button className='btnReturn' title="Voltar para página inicial" onClick={()=>{resetUserResponse()}}>Jogar novamente</button>
+          </Link>
+         <ReviewQuestion />
+
+
+        </div>
+        <div className='robotGameOver'>
+          <img src={robot} alt="Robot ilustration" />
+         </div>
       </div>
-    </div>
-  )
+    )
 }
+
+export default GameOver
 
 

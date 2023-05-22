@@ -5,6 +5,7 @@ import { faArrowLeft, faComment} from '@fortawesome/free-solid-svg-icons'
 
 import { ThemeContext } from '../context/themeContext';
 import { LanguageContext } from '../context/LanguageContext';
+import { UserResponseContext } from '../context/UserResponse';
 
 import SQLIcon from '../../img/icons/icons-sql.png';
 import JavaScriptIcon from '../../img/icons/icon-javascript.svg';
@@ -19,11 +20,12 @@ import './Languages.css';
 
 export default function ChooseLinguagens(){
     
-    const [ selectedOption, setSelectedOption ] = useState("easy");
-
     const { theme } = useContext(ThemeContext)
+    const { setUserResponse } = useContext(UserResponseContext)
     const { setUserLanguage} = useContext(LanguageContext)
-
+    
+    const [ selectedOption, setSelectedOption ] = useState("easy");
+    
     const containerRef = useRef();
     const titleRef = useRef();
     const input = useRef();
@@ -58,6 +60,12 @@ export default function ChooseLinguagens(){
             .forEach(ref => ref.current.classList.remove("Light"));
       
     },[theme])
+
+    useEffect(()=>{
+        
+        setUserResponse({})
+      
+    },[])
   
 
     return(

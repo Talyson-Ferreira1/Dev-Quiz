@@ -5,231 +5,174 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { QuestionContext } from '../context/Questions';
-import { ResultContext } from '../context/resultContext';
 import { CounterContext } from '../context/counterConext';
-import { UserDataContext } from '../context/userData';
+import { UserResponseContext } from '../context/UserResponse';
+
 import "./Question.css"
 
 // O selectedAlternative precisa ser resetado se o usuario remover a classe selected 
 
 function Problem() {
-    const [ changeBtnText, setChangeBtnText] =useState("Próxima")
+    const { questions } = useContext(QuestionContext);
+    const { counterContext, setCounterContext } = useContext(CounterContext);
+    const { userResponse, setUserResponse } = useContext(UserResponseContext);
+    
+    const [ counter, setCounter ] = useState(1);
+    const [ counterForQuestions, setCounterForQuestions ] = useState(0);
     const [ selectedAlternative, setSelectedAlternative ] = useState();
-    const [ contador, setContador ] = useState(1)
-    const [ counterQuestion, setCounterQuestion ] = useState(0)
-    const [ dataQuestions, setDataQuestions ] = useState([]);
-    const [ icon, setIcon ] = useState({"A":false,"B":false,"C":false,"D":false})
-    const [ question, setQuestion] = useState('');
-    const [ userResponseForLocalStorage, setUserResponseForLocalStorage] = useState([])
+    const [ icons, setIcons ] = useState( { A: false, B: false, C: false, D: false });
+    const [ currentQuestion, setCurrentQuestion ] = useState(); 
 
-    const { questionGame } = useContext(QuestionContext);
-    const { userResult, setUserResult } = useContext(ResultContext);
-    const { counterContext, setCounterContext } = useContext(CounterContext)
-    const { userData, setUserData } = useContext(UserDataContext)
-
-    
+    const alternatives = useRef();
     const navigate = useNavigate();
-    const Refs = {
-        alternatives: useRef(),
-        alterA: useRef(),
-        alterB: useRef(),
-        alterC: useRef(),
-        alterD: useRef()
 
-    }
-    
-    const changeIconChecked = (alternative) =>{
+    const nextQuestion = () => {
 
-        const newIcon = { A: false, B: false, C: false, D: false };
-        
-        setIcon( newIcon ) 
-
-        if(alternative){
-            setIcon(prevState => { newIcon[alternative] = true; return newIcon; })
-        }
-        
-    }
-
-    const shuffleQuestions = (array) => {
-        // esse algorítimo embaralha o array de perguntas 
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-    
-    const SelectAlternative = (e, alternative) => {
-        
-        removeClassSelected()
-
-        //adiciona a classe selected a alternativa clicada 
-        if (selectedAlternative === alternative) {
-            //Se a alternativa for igual a que ja esta selecionada:
-            setSelectedAlternative(null);
-
-        } else {
-            //se a alternativa for diferente da que esta selecionada:
-            e.target.classList.add("selected");
-            setSelectedAlternative(alternative);
-            changeIconChecked(alternative)
+        if(selectedAlternative !== undefined ){
+            setCounter(counter + 1)  
+            setCounterContext(counterContext + 1)
             
+            saveResponses()
+            resetSelectedAlternative()
+        }
+       
+    }
+
+    const saveResponses = () => {
+        let partialResult;
+
+        if(selectedAlternative === currentQuestion.resposta ){
+            partialResult = "acertou"
+        }else{
+            partialResult = "errou"
+        }
+
+        let markedAlternativeLetter =  getLetterSelected(selectedAlternative)
+        let correctAlternativeLetter = getLetterSelected(currentQuestion.resposta)
+
+        setUserResponse(prevUserResponse => ({
+            ...prevUserResponse,
+            marked: [...(prevUserResponse.marked || []), selectedAlternative],
+            correct:[...(prevUserResponse.correct || []), currentQuestion.resposta],
+            enunciado:[...(prevUserResponse.enunciado || []), currentQuestion.enunciado],
+            result:[...(prevUserResponse.result || []), partialResult],
+            markedLetter: [...(prevUserResponse.leterMarked || []), markedAlternativeLetter],
+            correctLetter: [...(prevUserResponse.correctLetter || []), correctAlternativeLetter],
+        }));
+        
+    }
+
+    const selectAlternative = (alternative, letterSelected) => {
+        resetSelectedAlternative()
+
+
+        if(alternative.target.innerText === selectedAlternative){
+            
+        }else{
+            setSelectedAlternative(alternative.target.innerText)
+            alternative.target.classList.add("selected")
+            changeIcon(letterSelected)
         }
         
     }
-    
+
     const resetSelectedAlternative = () => {
+
         setSelectedAlternative(undefined)
-        changeIconChecked()
-    }
-
-    const removeClassSelected = () => {
-
-        Refs.alternatives.current.childNodes.forEach((child) => {
+        changeIcon()
+        
+        alternatives.current.childNodes.forEach((child) => {
             child.classList.remove("selected");
         });
         
-        resetSelectedAlternative()
-
     }
 
-    const nextQuestion = () =>{
-
-        if(selectedAlternative !== undefined){
-            setContador(contador + 1)   
-            setCounterContext(counterContext + 1)
-            removeClassSelected()
-        }
-    }
-    
-    const resetContextUseResult = () => {
-        setUserResult([])
-    }
-
-    const updateUserResponseAndUserData = () => {
-        
-        let currentAnswer = dataQuestions[counterQuestion - 1].resposta.toUpperCase();
-        let currentStatement = dataQuestions[counterQuestion - 1].enunciado;
-        let StringsAlternatives = {
-            A : dataQuestions[counterQuestion - 1].alternativa_A,
-            B : dataQuestions[counterQuestion - 1].alternativa_B,
-            C : dataQuestions[counterQuestion - 1].alternativa_C,
-            D : dataQuestions[counterQuestion - 1].alternativa_D
-        }
-
-        if(selectedAlternative !== undefined){
-            
-            selectedAlternative === currentAnswer
-                ?setUserResult([...userResult,"acertou"])
-                :setUserResult([...userResult,"errou"]); 
-
-            selectedAlternative === currentAnswer
-                ?setUserResponseForLocalStorage([...userResponseForLocalStorage,"acertou"])
-                :setUserResponseForLocalStorage([...userResponseForLocalStorage,"errou"]); 
-
-                        
-            const newUserData = {
-                ...userData,
-                [Object.keys(userData).length + 1]: { 
-                    marked: selectedAlternative, 
-                    correct: currentAnswer,
-                    enunciado: currentStatement, 
-                    correctAlternative: StringsAlternatives[currentAnswer],
-                    userAlternative: StringsAlternatives[selectedAlternative]
-                }
-            };
-            
-            setUserData(newUserData);
-            sendUserDataToLocalStorage(newUserData)
-        }
-    }
-
-    const sendUserDataToLocalStorage = (newUserData) => {
-        localStorage.setItem('UserData', JSON.stringify(newUserData));
-    }
-
-    const sendUserResponseToLocalStorage = () => {
-        localStorage.setItem('UserResponse', JSON.stringify(userResponseForLocalStorage));
-    }
-
-    const fetchDataQuestions = () => {
-
-        const storedDataQuestion = localStorage.getItem('DataQuestions');
-        
-        if (storedDataQuestion) {
-
-            const parsedDataQuestion = JSON.parse(storedDataQuestion);
-            const shuffledQuestions = shuffleQuestions(parsedDataQuestion);
-            
-            setDataQuestions(shuffledQuestions);
-        }
-
-    }
-
-    useEffect(() => {
+    const changeIcon = (letterSelected) => {
    
-        if (!questionGame) {
-
-            fetchDataQuestions();
-
-        } else {
-
-            const shuffledQuestions = shuffleQuestions(questionGame);
-            setDataQuestions(shuffledQuestions);
-
-        }
-
-    }, [questionGame]);
-
-    useEffect(() => {
-        contador === 10 ? setChangeBtnText('Finalizar') : setChangeBtnText('Próxima' ) 
-        contador === 10 ? setCounterQuestion(10) : setCounterQuestion(counterQuestion + 1 ) 
-        contador === 11 ? sendUserResponseToLocalStorage() : ""
-        contador === 11 ? navigate(`/Dev-Quiz/gameOver`) : ""
-
-    },[contador]);
-
-    useEffect(() => {
-
-        if (dataQuestions.length > 0) {
-            setQuestion(dataQuestions[counterQuestion - 1]);
-        }
-
-    }, [dataQuestions, counterQuestion]);
-    
-    useEffect(()=>{
+        const newIcon = { A: false, B: false, C: false, D: false };
         
-        resetContextUseResult()
+        setIcons( newIcon ) 
 
-    },[])
+        if(letterSelected){
+            setIcons(prevState => { newIcon[letterSelected] = true; return newIcon; })
+        }
+        
+
+    }
+
+    const getUserResponseInTheLocalStorage = () => {
+        let storedUserResponse = localStorage.getItem('QuestionsLocalStorage');
+        let convertToOBJ =  JSON.parse(storedUserResponse)
+        return convertToOBJ
+    }
+
+    const sendResponseToLocalStorage = ()  => {
+
+        localStorage.setItem('userResult', JSON.stringify(userResponse));
+
+    }
+
+    const getLetterSelected = (string) => {
+        let letter;
+        
+        alternatives.current.childNodes.forEach((child) => {
+            //Se o valor de string for igual o valor de uma das li retorne o alternativa dessa li
+            if(string === child.innerText ){
+                letter = child.classList[0]
+            }
+            
+
+        });
+
+        return letter;
+
+    }
+
+
+    useEffect(()=>{
+
+        counter === 10 ?'Finalizar' :'Próxima' 
+        counter === 10? setCounterForQuestions(10):setCounterForQuestions(counterForQuestions + 1)
+        counter === 11 ? sendResponseToLocalStorage() : ""
+        counter === 11 ? navigate(`/Dev-Quiz/gameOver`) : ""
+
+        /* counter === 11 ? console.log(userResponse) : "" */
+       
+        if (Object.keys(questions).length === 0) {
+            let dataQuestions = getUserResponseInTheLocalStorage()
+            setCurrentQuestion(dataQuestions[counter - 1])
+        }else {
+            setCurrentQuestion(questions[counter - 1])
+        }
+    },[counter])
 
     
     return (
         <>
-            {question && (
+            {currentQuestion && (
                 <div className='containerAlter'>
-                    <span className='tema'>Tema: {question.tema}</span>
-                    <h2 className='conterQuestion'>Questão {counterQuestion}/10</h2>
-                    <p className='enunciado'> {question.enunciado}</p>
-                    <ul ref={Refs.alternatives}>
-                    <li ref={Refs.alterA} onClick={(e) => SelectAlternative(e, "A")}>
-                        {icon.A === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
-                        {question.alternativa_A}
-                    </li>
-                    <li onClick={(e) => SelectAlternative(e, "B")}>
-                        {icon.B === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
-                        {question.alternativa_B}
-                    </li>
-                    <li onClick={(e) => SelectAlternative(e, "C")}>
-                        {icon.C === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
-                        {question.alternativa_C}
-                    </li>
-                    <li onClick={(e) => SelectAlternative(e, "D")}>
-                        {icon.D === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
-                        {question.alternativa_D}
-                    </li>
+                    <span className='tema'>Tema: {currentQuestion.tema} </span>
+                    <h2 className='conterQuestion'>Questão {counterForQuestions}/10</h2>
+                    <p className='enunciado'> {currentQuestion.enunciado}</p>
+                    <ul ref={alternatives}>
+                        <li className='A' onClick={(e) => selectAlternative(e,"A")}>
+                            {icons.A === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
+                            {currentQuestion.alternatives[0]}
+                        </li>
+                        <li className='B' onClick={(e) => selectAlternative(e,"B")}>
+                             {icons.B === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
+                            {currentQuestion.alternatives[1]}
+                        </li>
+                        <li className='C' onClick={(e) => selectAlternative(e,"C")}>
+                             {icons.C === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
+                            {currentQuestion.alternatives[2]}
+                        </li>
+                        <li className='D' onClick={(e) => selectAlternative(e,"D")}>
+                             {icons.D === true? <FontAwesomeIcon icon={faCircleCheck} className='iconCheck'/>: <FontAwesomeIcon icon={faCircle} className='icon'/>}
+                            {currentQuestion.alternatives[3]}
+                        </li>
                     </ul>
-                    <button className='btnNext' onClick={()=>{updateUserResponseAndUserData(); nextQuestion();}}>{changeBtnText}</button>
+                    <button className='btnNext' onClick={()=>{nextQuestion()}}>{ counter === 10 ?'Finalizar' :'Próxima' }</button>
                 </div>
             )}
         </>
