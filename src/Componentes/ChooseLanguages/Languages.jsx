@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faComment} from '@fortawesome/free-solid-svg-icons'
 
+import { TimerContext } from '../context/TimerContext';
 import { ThemeContext } from '../context/themeContext';
 import { LanguageContext } from '../context/LanguageContext';
 import { UserResponseContext } from '../context/UserResponse';
@@ -19,10 +20,21 @@ import Mode from '../Mode/mode';
 import './Languages.css';
 
 export default function ChooseLinguagens(){
+
+
+
+
+    //zerar o objeto do timer 
+
     
+
+
+
+
     const { theme } = useContext(ThemeContext)
     const { setUserResponse } = useContext(UserResponseContext)
     const { setUserLanguage} = useContext(LanguageContext)
+    const { timer, setTimer } = useContext(TimerContext);
     
     const [ selectedOption, setSelectedOption ] = useState("easy");
     
@@ -51,6 +63,32 @@ export default function ChooseLinguagens(){
 
     };
 
+    const SendValueTime = (difficulty)=>{
+        if(difficulty === "easy"){
+            setTimer(prevTimer => ({
+                ...prevTimer,
+                active: false,
+                finished:false              
+            }));
+
+        }else if(difficulty === "medium"){
+            setTimer(prevTimer => ({
+                ...prevTimer,
+                timer:3,
+                active: true             
+            }));
+
+        }else if(difficulty === "hard"){  
+            setTimer(prevTimer => ({
+                ...prevTimer,
+                timer:2,    
+                active: true         
+            }));  
+        }
+    }
+
+  
+
     useEffect(()=>{
         
         theme === "Light"
@@ -64,6 +102,13 @@ export default function ChooseLinguagens(){
     useEffect(()=>{
         
         setUserResponse({})
+        setTimer(prevTimer => ({
+            ...prevTimer,
+            active: false,
+            finished: false, 
+            timer:0              
+        }));
+
       
     },[])
   
@@ -123,7 +168,10 @@ export default function ChooseLinguagens(){
                             name="radio"
                             value="easy"
                             checked={selectedOption === "easy"}
-                            onChange={handleOptionChange}
+                            onChange={(event) => {
+                                handleOptionChange(event);
+                                SendValueTime("easy");
+                            }}
                         />
                         <span className="name">Fácil</span>
                         </label>
@@ -133,7 +181,10 @@ export default function ChooseLinguagens(){
                             name="radio"
                             value="medium"
                             checked={selectedOption === "medium"}
-                            onChange={handleOptionChange}
+                            onChange={(event) => {
+                                handleOptionChange(event);
+                                SendValueTime("medium");
+                            }}
                         />
                         <span className="name">Média</span>
                         </label>
@@ -143,7 +194,10 @@ export default function ChooseLinguagens(){
                             name="radio"
                             value="hard"
                             checked={selectedOption === "hard"}
-                            onChange={handleOptionChange}
+                            onChange={(event) => {
+                                handleOptionChange(event);
+                                SendValueTime("hard");
+                            }}
                         />
                         <span className="name">Difícil</span>
                         </label>

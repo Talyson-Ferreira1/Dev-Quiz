@@ -16,6 +16,7 @@ import { LanguageProvider } from './Componentes/context/LanguageContext.jsx';
 import { QuestionProvider } from './Componentes/context/Questions.jsx';
 import { CounterProvider } from './Componentes/context/counterConext.jsx';
 import { UserResponseProvider } from './Componentes/context/UserResponse.jsx';
+import { TimerProvider } from './Componentes/context/TimerContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -25,17 +26,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <QuestionProvider>
               <CounterProvider>
                   <UserResponseProvider>
-                    <Routes>
-                      <Route path="/" element={<App />}>
-                        <Route path="Dev-Quiz" element={<InitScreen />} />
-                        <Route path="Dev-Quiz/tecnologia" element={<ChooseLanguages />} />
-                        <Route path="Dev-Quiz/Loading" element={<Loader />} />
-                        <Route path="Dev-Quiz/test" element={<Test />} />
-                        <Route path="Dev-Quiz/questões" element={<QuestionArea />} />
-                        <Route path="Dev-Quiz/gameOver" element={<GameOver />} />
-                      </Route>
-                      <Route path="*" element={<ErrorPage />} />
-                    </Routes>
+                    <TimerProvider>
+                      <Routes>
+                        <Route path="/" element={<App />}>
+                          <Route path="Dev-Quiz" element={<InitScreen />} />
+                          <Route path="Dev-Quiz/tecnologia" element={<ChooseLanguages />} />
+                          <Route path="Dev-Quiz/Loading" element={<Loader />} />
+                          <Route path="Dev-Quiz/test" element={<Test />} />
+                          <Route path="Dev-Quiz/questões" element={<QuestionArea />} />
+                          <Route path="Dev-Quiz/gameOver" element={<GameOver />} />
+                        </Route>
+                        <Route path="*" element={<ErrorPage />} />
+                      </Routes>
+                    </TimerProvider>
                  </UserResponseProvider>
               </CounterProvider>
             </QuestionProvider>

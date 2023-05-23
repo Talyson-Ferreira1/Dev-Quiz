@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { CounterContext } from '../context/counterConext';
 import { ThemeContext } from '../context/themeContext';
 import { UserResponseContext } from '../context/UserResponse';
-
+import { TimerContext } from '../context/TimerContext';
 import ProgressBar from './ProgressBar';
 import Video from '../fundo/videoPlayer';
 import ReviewQuestion from './reviewQuestions';
@@ -16,7 +16,7 @@ import RobotIndiferent from '../../img/indiferent-robot/robot-3.png'
 
 function GameOver() {
 
-
+//importar o timer b 
     const [ percentage, setpercentage] = useState(0)
     const [ message, setMessage] = useState()
     const [ userError, setUserError] = useState()
@@ -24,9 +24,10 @@ function GameOver() {
     const [ messageColor, setMessageColor] = useState('rgb(0, 0, 0)');
     const [ robot, setRobot ] = useState()
 
-    const { setCounterContext} = useContext(CounterContext);
     const { userResponse, setUserResponse } = useContext(UserResponseContext);
-    const { theme} = useContext(ThemeContext)
+    const { setCounterContext } = useContext(CounterContext);
+    const { timer, setTimer } = useContext(TimerContext)
+    const { theme } = useContext(ThemeContext)
     
     const containerRef = useRef()
    
@@ -131,6 +132,14 @@ function GameOver() {
         containerRef.current.classList.remove("Light");
       }
     },[theme])
+
+    useEffect(()=>{
+      setTimer({
+        timer: 0,
+        active:false,
+        finished:false
+      });
+    },[])
 
     return (
       

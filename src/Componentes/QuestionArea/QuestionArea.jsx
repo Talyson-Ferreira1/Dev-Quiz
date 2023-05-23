@@ -1,19 +1,45 @@
-import React from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
+
+import {LanguageContext} from '../context/LanguageContext' 
+import { TimerContext } from '../context/TimerContext';
 
 import ProgressBar from './ProgressBar';
 import Question from './Question';
 import Video from '../fundo/videoPlayer'
+import Timer from './timer'
+import FineshedTime from './FineshedTime';
 import './QuestionArea.css';
 
 export default function QuestionArea() {
+
+  const { timer } = useContext(TimerContext);
+
+  const [ isActive, setIsActive ] = useState(false)
+  
+
+  useEffect(()=>{
+    if(timer.active === true ){
+      setIsActive(true)
+      
+    }else{
+      setIsActive(false)  
+    }
+
+  },[])
     
+  //adicionar um timer quando estiver no medio e dificil 
     
   return (
     <>
+
+      {timer.finished && (
+        <FineshedTime/>
+      )}
+
       <div className='container'>
 
         <Video/>
@@ -27,6 +53,9 @@ export default function QuestionArea() {
           </Link>
 
           <ProgressBar/>
+          
+          {isActive &&(
+            <Timer/>)}
 
           <Question/>
 
