@@ -1,0 +1,306 @@
+
+:root {
+    --border-radius: 0.75rem;
+  --primary-color: #639dac;
+  --secondary-color: #3c3852;  
+  --white: #fff;
+}
+
+.toggleCard {
+  width: 80% ;
+  height: 15rem;
+  flex-direction: column;
+  position: relative;
+  margin: 1rem;
+  transition: .5s;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+
+}
+
+.toggleCard.active{
+  height: 15rem;
+}
+
+.btnToggle {
+  width: 10rem;
+  height: 3rem;
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: .5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 2;
+  transition-delay: 1s;
+  background: var(--white);
+  border: none;  
+  outline: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.btnToggle.active {
+  width: 5rem;
+  height: 3rem;
+  border-radius: 20px;
+  margin-top: 0rem;
+  transition-delay: .5s;
+}
+
+.btnToggle::after {
+  content: 'Ver resultado';
+  font-weight: 700;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 3rem;
+  background:white;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: .8rem;
+
+}
+
+.btnToggle.active.btnToggle::after {
+  width: 0rem;
+  height: 0;
+}
+
+.btnToggle > svg {
+  transition: .3s;
+}
+
+.btnToggle.active > svg {
+  transition: .3s;
+  transform: rotate(225deg);
+}
+
+.card {
+
+  position: absolute;
+  margin:  0;
+  font-family: "Arial";
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 1;
+  z-index: 1;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 0%;
+
+}
+
+.card > * {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card.active {
+  animation: OpenAnimation 1s alternate forwards;
+}
+
+.card.active > * {
+  opacity: 1;
+  transition-delay: 1s;
+}
+
+.card.inactive {
+  animation: CloseAnimation 1s alternate forwards;
+  overflow: hidden;
+}
+
+.card.inactive > * {
+  opacity: 0;
+}
+
+@keyframes OpenAnimation {
+  0% {
+
+    height: 0%;
+    width: 0%;
+    opacity: 0;
+    
+    
+   
+  }
+  50% {
+    height: 100%;
+    width: 8%;
+    opacity: .5;
+   
+  }
+  100% {
+    
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    
+   
+    
+  }
+}
+
+@keyframes CloseAnimation {
+  0% {
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    
+  }
+  50% {
+    height: 100%;
+    width: 8%;
+    opacity: .5;
+  }
+  100% {
+    height: 0%;
+    width: 0%;
+    opacity: 0;
+    
+  }
+}
+
+.enunciadoReview, .CorrectAlternative, .MarkedAlternative {
+  color: white;
+  padding: .5rem 0;
+}
+
+.card .card__arrow {
+  position: absolute;
+  background: var(--white);
+  transition: 0.2s;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__arrow  svg {
+  transition: 0.2s;
+  width: 100%;
+  height: 100%;
+  padding: .4rem;
+
+}
+
+.card__arrow.left.active, .card__arrow.right.active {
+  display: none;
+}
+
+.card__arrow.right {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  bottom: 0;
+  right: 0;
+}
+
+.card__arrow.left {
+  
+  border-top-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  bottom: 0;
+  left: 0;
+  
+
+}
+
+.card__arrow.left button, .card__arrow.right button{
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.card:hover .right svg {
+  transform: translateX(3px);
+}
+
+.card:hover .left svg {
+  transform: translateX(-3px);
+}
+
+
+/* @keyframes OpenAnimation {
+  0% {
+    height: 0%;
+    width: 0%;
+    opacity: 0;
+    
+    
+   
+  }
+  50% {
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+   
+  }
+  100% {
+    
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    
+   
+    
+  }
+}
+
+@keyframes CloseAnimation {
+  0% {
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    transform: translateY(0px);
+    
+  }
+  50% {
+    height: 100%;
+    width: 40px;
+    opacity: 0.5;
+  }
+  100% {
+    height: 0%;
+    width: 0%;
+    opacity: 0;
+    
+  }
+} */
+ 
+@media (max-width: 900px) { 
+  .enunciadoReview {
+    font-size: 1rem;
+  }
+  .CorrectAlternative, .MarkedAlternative {
+    font-size: .7rem;
+  }
+}
+
+@media (max-width: 400px) { 
+  .enunciadoReview {
+    font-size: .8rem;
+  }
+  .CorrectAlternative, .MarkedAlternative {
+    font-size: .5rem;
+  }
+}

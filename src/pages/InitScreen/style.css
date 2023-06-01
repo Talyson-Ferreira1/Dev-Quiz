@@ -1,0 +1,110 @@
+:root {
+    --primary-container:#1e232e83;
+ 
+}
+
+.containerContent {
+    background: var(--primary-container);
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-width: 100vw;
+    border-radius: 0;
+    display:flex;
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+@media (max-width:800px){
+    .containerContent {
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+    }
+
+    .containerContent .container_LeftSize {
+        width: 100%;
+        height: 50%;
+        max-width: 100vw;
+        max-height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+    }
+
+    .containerContent .container_LeftSize h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .containerContent .container_LeftSize p {
+        font-size: .8rem;
+        text-align: center;
+        padding: 0 10%;
+    }
+
+    .containerContent .container_LeftSize .container_Button {
+        width: 100%;
+        margin: 2rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .containerContent .container_LeftSize .container_Button a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .containerContent .container_rightSize {
+        width: 100%;
+        height: 50%;
+        max-width: 100vw;
+        max-height: 50vh;
+    }
+
+    .containerContent .container_rightSize svg {
+        width: 80%;
+    }
+   
+}
+@media (max-width:500px){
+
+    .containerContent .container_LeftSize h1 {
+        font-size: 1.3rem;
+        padding: 0;
+
+    }
+
+    .containerContent .container_LeftSize p {
+        font-size: .7rem;
+        padding: 0 ;
+    }
+    .containerContent .container_LeftSize .container_Button {
+        margin: 1rem ;
+    }
+
+    .containerContent .container_rightSize svg {
+        width: 100%;
+        padding: 3rem;
+    }
+
+    .container_rightSize .ilustration {
+
+        position: absolute;
+        padding: 0;
+    
+    }
+}
+@media (max-width:300px){
+    
+    .container_rightSize .ilustration {
+
+        position: absolute;
+        padding: 0;
+        width: 80%;
+    
+    }
+}

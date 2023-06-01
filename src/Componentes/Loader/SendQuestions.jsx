@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
+
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, setDoc, doc  } from 'firebase/firestore';
+//Mantenho esse arquivo, porque irei refazer as perguntas e é mais rápido telas que consultar no db
+
 
 let JAVASCRIPT_easy = [
   {

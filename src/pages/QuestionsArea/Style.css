@@ -1,0 +1,25 @@
+:root {
+    --text_primary_color: #ffffff;
+    --text_secundary_color: #f1f1f18c;
+    --primary_color:#639dac;
+    --primary-container:#1e232e83;
+}
+.container_Component {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.Container_Questions {
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    background: var(--primary-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}

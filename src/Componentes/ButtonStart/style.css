@@ -1,0 +1,24 @@
+.Container_button {
+    width: 15rem;
+    height: 5rem;
+    display: flex;
+    align-items:center ;
+    justify-content: center;
+    z-index: 2;
+}
+
+
+.Container_button .buttoon_start {
+    width: 10rem;
+    height: 3rem;
+    border-radius: 20px;
+    background: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.Container_button  .buttoon_start:hover {
+    transform: scale(1.05);
+}

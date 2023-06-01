@@ -1,0 +1,99 @@
+
+:root {
+    --PrimaryText-color:#212A3E;
+    --SecondaryText-color:#393646;
+    --PrimaryColor:#ce98a9;
+    --container-color :#ffffff92;
+    --card-color :#0000006c;
+}
+.containerGameOver {
+    width: 100%;
+    height: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.container-Content-GameOver {
+    height: 100%;
+    width: 80%;
+    background:var(--container-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.container-Content-GameOver a {
+    padding: 1rem;
+    z-index: 3;
+} 
+
+.message {
+
+    animation: scale-up-center .3s ease-in;
+    text-align: center;
+    font-size: clamp(15px, 1.5rem, 30px) ;
+    padding: 1rem;
+    
+}
+
+.userHits {
+    color: rgb(212, 212, 212);
+    text-align: center;
+}
+
+.btnReturn {
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 800;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    background:  #16e22a;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btnReturn:hover{
+    transform: scale(1.05);
+}
+
+.robotGameOver {
+    position: absolute;
+    left: -100%;
+    bottom: 40%;
+    width: 12rem;
+    height: 12rem;
+    z-index: 2;
+    animation: slide-right 2s 1s ease-in-out forwards;
+}
+
+.robotGameOver img {
+    width: 100%;
+}
+
+@keyframes slide-right {
+    0% {
+        -webkit-left: 0;
+      }
+      100% {
+          left: 15%;
+      }
+}
+@keyframes scale-up-center {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+}
