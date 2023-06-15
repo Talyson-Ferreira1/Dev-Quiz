@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 import { Theme_Context } from '../../contexts/Theme_Conext'
 import Ilustration from '../../img/init2.png'
 import './style.css'
 
 
-function index() {
+function Index() {
 
   const{theme} = useContext(Theme_Context)
 
@@ -19,4 +19,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

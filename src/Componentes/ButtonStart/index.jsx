@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+/* eslint-disable react/prop-types */
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import './style.css'
 
-function index({conditions}) {
+function Index({conditions}) {
 
   const navigate = useNavigate()
 
@@ -48,4 +49,4 @@ function index({conditions}) {
   )
 }
 
-export default index
+export default Index

@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect, useState} from 'react'
+import { useContext, useEffect, useState} from 'react'
 import { Question_Context } from '../../contexts/Question_Context'
 import { Timer_Context } from '../../contexts/Timer_Context'
 import { UserData_Context } from '../../contexts/userData'
@@ -12,7 +12,7 @@ import Stopwatch from '../../Componentes/Stopwatch__SelectLanguage/index'
 import FinishedTime from '../../Componentes/finishedTime/index'
 import './Style.css'
 
-function index() {
+function Index() {
  
   const { Question } = useContext(Question_Context)
   const { timer, setTimer } = useContext(Timer_Context)
@@ -80,13 +80,9 @@ function index() {
 
     showStopWatch()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
-
-  //Refatorar o código de forma q diminua o uso de media queries
-  //Criar um gameOver mais bonoto
-  //Renomear os contextos adiccionando a palavra context ao final   
-
   return (
     <div className='container_Component'>
         {timer.finished &&(
@@ -110,7 +106,7 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
 
 
 

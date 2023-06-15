@@ -1,10 +1,11 @@
-import React,{useState, useEffect} from 'react'
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import './style.css'
 
-function index({questionData}) {
+function Index({questionData}) {
     const [ counterQuestion, setCounterQuestion ] = useState(0)
     const [ colorContainer, setColorContainer ] = useState()
     const [ isActive, setIsActive] = useState();
@@ -100,4 +101,4 @@ function index({questionData}) {
   )
 }
 
-export default index
+export default Index

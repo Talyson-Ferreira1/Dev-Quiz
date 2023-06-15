@@ -1,11 +1,12 @@
-import React,{ useContext, useEffect, useState } from 'react'
+/* eslint-disable react/prop-types */
+import { useContext, useEffect, useState } from 'react'
 
 import { Theme_Context } from '../../contexts/Theme_Conext';
 import { UserData_Context } from '../../contexts/userData'
 
 import './style.css'
 
-function index({StageDifficulty}) {
+function Index({StageDifficulty}) {
     
     const { theme } = useContext(Theme_Context)
     const { setUserData } = useContext(UserData_Context) 
@@ -55,12 +56,14 @@ function index({StageDifficulty}) {
             
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[theme.mode]) 
     
     useEffect(() => {
 
         StageDifficulty(selectDifficulty);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectDifficulty]);
       
   
@@ -107,4 +110,4 @@ function index({StageDifficulty}) {
     )
 }
 
-export default index
+export default Index

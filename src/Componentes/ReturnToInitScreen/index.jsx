@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft} from '@fortawesome/free-solid-svg-icons'
@@ -7,7 +7,7 @@ import { Theme_Context } from '../../contexts/Theme_Conext'
 
 import './style.css'
 
-function index() {
+function Index() {
 
   const { theme } = useContext(Theme_Context)
 
@@ -21,6 +21,7 @@ function index() {
         
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[theme.mode]) 
 
   return (
@@ -32,4 +33,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

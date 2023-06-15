@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from 'react'
+import { useRef, useEffect, useContext } from 'react'
 
 import Mode from '../../Componentes/Mode/mode'
 import Video from '../../Componentes/Fundo/videoPlayer'
@@ -8,8 +8,8 @@ import './style.css'
 
 import { Theme_Context } from '../../contexts/Theme_Conext'
 
-function index() {
-    const { theme, toggleTheme } = useContext(Theme_Context);
+function Index() {
+    const { theme } = useContext(Theme_Context);
 
     const Refs = {
       container : useRef(),
@@ -27,6 +27,7 @@ function index() {
         document.documentElement.style.setProperty('--primary-container',  theme.colors.dark.ColorBG);
         
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[theme.mode])   
 
   return (
@@ -39,4 +40,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

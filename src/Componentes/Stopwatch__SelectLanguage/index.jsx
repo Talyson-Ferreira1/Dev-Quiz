@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react';
 
 import { Timer_Context } from '../../contexts/Timer_Context';
 
@@ -9,7 +8,6 @@ function Timer() {
     
   const [ allTimeInSeconds, setAllTimeInSeconds ] = useState(timer.timer * 60);
   const [ colorTime, setColorTime] = useState("black")
-  const navigate = useNavigate();
 
 
   const minutes = Math.floor(allTimeInSeconds / 60);
@@ -38,8 +36,6 @@ function Timer() {
             finished: true 
           }));
 
-       /*  navigate(`/Dev-Quiz/gameOver`) */
-       /*  alert("Tempo esgotado!"); */
         return;
 
     } else {
@@ -51,6 +47,7 @@ function Timer() {
     if (allTimeInSeconds <= 30){
       chageColor(true)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTimeInSeconds]);
 
   return (

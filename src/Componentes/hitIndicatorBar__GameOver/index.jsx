@@ -1,8 +1,7 @@
-import React from 'react'
-
 import './style.css'
 
-function index({percentage, circleWidth}) {
+// eslint-disable-next-line react/prop-types
+function Index({percentage, circleWidth}) {
 
     const radius = 65
     const dashArray = radius * Math.PI * 2
@@ -44,4 +43,4 @@ function index({percentage, circleWidth}) {
   )
 }
 
-export default index
+export default Index

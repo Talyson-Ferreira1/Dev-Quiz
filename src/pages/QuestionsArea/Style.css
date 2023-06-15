@@ -10,10 +10,11 @@
     justify-content: center;
     width: 100vw;
     height: 100vh;
+
 }
 
 .Container_Questions {
-    width: 90%;
+    width: 90%; 
     height: 90%;
     border-radius: 10px;
     background: var(--primary-container);

@@ -1,4 +1,5 @@
-import React,{ useEffect, useState, useContext } from 'react'
+/* eslint-disable react/prop-types */
+import { useEffect, useState, useContext } from 'react'
 
 import { Theme_Context } from '../../contexts/Theme_Conext'
 import { UserData_Context } from '../../contexts/userData'
@@ -11,7 +12,7 @@ import Img_Css from '../../img/icons/icon-css3.svg'
 import Img_Sql from '../../img/icons/icons-sql.png'
 import './style.css'
 
-function index({StateLanguage}) {
+function Index({StateLanguage}) {
     
     const { theme } = useContext(Theme_Context);
     const { setUserData } = useContext(UserData_Context) 
@@ -51,6 +52,7 @@ function index({StateLanguage}) {
 
     useEffect(()=>{
         StateLanguage(selectedLanguage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[selectedLanguage.Language])
 
     useEffect(()=>{
@@ -63,6 +65,7 @@ function index({StateLanguage}) {
          
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[theme.mode]) 
       
       
@@ -93,4 +96,4 @@ function index({StateLanguage}) {
   )
 }
 
-export default index
+export default Index

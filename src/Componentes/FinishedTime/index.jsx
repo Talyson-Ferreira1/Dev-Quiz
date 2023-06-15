@@ -1,10 +1,9 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 
 import BadRobot from '../../img/robot-bad/robot-7.png' 
 import './style.css'
 
-function index() {
+function Index() {
   return (
     <div className="Container">
       <img className="BadRobot" src={BadRobot} alt="bad robot" />
@@ -20,4 +19,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

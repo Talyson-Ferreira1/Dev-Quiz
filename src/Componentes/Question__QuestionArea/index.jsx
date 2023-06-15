@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef} from 'react';
+import { useContext, useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,17 +6,16 @@ import { faCircleCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Counter_Context } from '../../contexts/Counter';
 import { UserResponse_context } from '../../contexts/UserResponse_context';
-import { UserData_Context } from '../../contexts/userData';
 import { Theme_Context } from '../../contexts/Theme_Conext';
 import './style.css'
 
 
-function index({questions}) {
+// eslint-disable-next-line react/prop-types
+function Index({questions}) {
 
   const { counter, setCounter } = useContext(Counter_Context)
   const { userResponse, setUserResponse } = useContext(UserResponse_context)
   const { theme } =  useContext(Theme_Context)
-  const { userData, setUserData} = useContext(UserData_Context)
 
   const [ icons, setIcons ] = useState( { A: false, B: false, C: false, D: false });
   const [ counterForQuestions, setCounterForQuestions ] = useState( 0 )
@@ -31,13 +30,12 @@ function index({questions}) {
     resetSelectedAlternative()
 
 
-    if(alternative.target.innerText === selectedAlternative){
-        
-    }else{
-        setSelectedAlternative(alternative.target.innerText)
-        alternative.target.classList.add("selected")
-        changeIcon(letterSelected)
-    }
+  if (!(alternative.target.innerText === selectedAlternative)) {
+    setSelectedAlternative(alternative.target.innerText);
+    alternative.target.classList.add("selected");
+    changeIcon(letterSelected);
+  }
+
     
   }
 
@@ -59,7 +57,8 @@ function index({questions}) {
     setIcons( newIcon ) 
 
     if(letterSelected){
-        setIcons(prevState => { newIcon[letterSelected] = true; return newIcon; })
+        setIcons( () => { 
+          newIcon[letterSelected] = true; return newIcon; })
     }
     
 
@@ -129,6 +128,7 @@ function index({questions}) {
     counter === 11 ? navigate(`/Dev-Quiz/GameOver`) : "" 
     counter === 11 ? sendResponseToLocalStorage() : ""
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[counter])
 
   useEffect(()=>{
@@ -154,6 +154,7 @@ function index({questions}) {
      
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[theme.mode]) 
 
   return (
@@ -188,4 +189,4 @@ function index({questions}) {
 );
 }
 
-export default index
+export default Index

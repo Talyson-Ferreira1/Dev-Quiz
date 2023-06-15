@@ -1,4 +1,3 @@
-import React from 'react'
 import video from '../../img/background-video.mp4'
 
 function videoPlayer() {

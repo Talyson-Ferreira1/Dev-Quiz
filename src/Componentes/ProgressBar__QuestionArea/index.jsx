@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 import { Counter_Context } from '../../contexts/Counter';
 
 import './style.css'
 
-function index() {
+function Index() {
 
   const { counter } = useContext(Counter_Context)
 
@@ -28,4 +28,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

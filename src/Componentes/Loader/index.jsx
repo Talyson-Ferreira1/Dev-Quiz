@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef, useState} from 'react';
+import {useEffect, useContext, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
@@ -128,6 +128,7 @@ export default function Loader() {
         navigate('/Dev-Quiz/Questions')
       },2000)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return (

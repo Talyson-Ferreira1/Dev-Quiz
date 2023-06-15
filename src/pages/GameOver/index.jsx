@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { UserResponse_context } from '../../contexts/UserResponse_context'
@@ -15,7 +15,7 @@ import RobotIndiferent from '../../img/indiferent-robot/robot-3.png'
 
 import './style.css'
 
-function index() {
+function Index() {
     const { userResponse, setUserResponse } = useContext(UserResponse_context)
     const { theme } = useContext(Theme_Context)
 
@@ -121,6 +121,7 @@ function index() {
             
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => {
@@ -134,6 +135,7 @@ function index() {
             chooseRobotImg( dataAlreadyProcessed[2])
         }
   
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questionData])
 
     
@@ -160,6 +162,7 @@ function index() {
      
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[theme.mode]) 
 
   return (
@@ -201,4 +204,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

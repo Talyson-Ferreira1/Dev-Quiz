@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 
 import { Theme_Context } from '../../contexts/Theme_Conext'
 import { Counter_Context } from '../../contexts/Counter'
@@ -15,7 +15,7 @@ import ButtonReturnToInit from  '../../Componentes/ReturnToInitScreen'
 import Mode from '../../Componentes/Mode/mode'
 import './style.css';
 
-function index() {
+function Index() {
 
   const { theme } = useContext(Theme_Context); 
   const { setCounter } =  useContext(Counter_Context)
@@ -102,9 +102,6 @@ function index() {
     }else if( conditionsToStart.Language && conditionsToStart.Difficulty ){
       setInstructionText("Clique em começar")
       return;
-    }else if( !conditionsToStart.Language && !conditionsToStart.Difficulty ){
-      setInstructionText("Selecione uma tecnologia")
-      return;
     }
 
   }
@@ -120,6 +117,7 @@ function index() {
     setUserData("")
     setUserResponse({})
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   useEffect(()=>{
@@ -136,6 +134,7 @@ function index() {
      
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[theme.mode]) 
 
   useEffect(()=>{
@@ -183,6 +182,7 @@ function index() {
 
     changeInstructionText()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[activeTutorial, applicationStage.Selected])
 
   return (
@@ -209,6 +209,6 @@ function index() {
   )
 }
 
-export default index
+export default Index
 
 
